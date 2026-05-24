@@ -8,10 +8,16 @@ import qs.Common
 import qs.Services
 import qs.Widgets
 import qs.Modules.Plugins
+import "../mpvpaper-plugin/translations.js" as Translations
 
 PluginComponent {
     id: root
     pluginId: "mpvpaper-widget"
+
+    Component.onCompleted: {
+        // Double-check that translations are injected (safety for standalone widget loading)
+        Translations.inject(I18n)
+    }
 
     property var monitors: Quickshell.screens.map(screen => screen.name)
     property string selectedMonitor: {
@@ -107,7 +113,7 @@ PluginComponent {
     Process {
         id: systemFilePickerProcess
         property string selectedFile: ""
-        command: ["bash", "-c", "zenity --file-selection --multiple --separator=$'\n' --title='选择视频文件' --file-filter='视频文件 | *.mp4 *.mkv *.webm *.avi *.mov *.flv *.wmv *.m4v' --file-filter='所有文件 | *'"]
+        command: ["bash", "-c", "zenity --file-selection --multiple --separator=$'\n' --title='" + I18n.tr("Select Video Files", "mpvpaper") + "' --file-filter='" + I18n.tr("Video Files", "mpvpaper") + " | *.mp4 *.mkv *.webm *.avi *.mov *.flv *.wmv *.m4v' --file-filter='" + I18n.tr("All Files", "mpvpaper") + " | *'"]
         stdout: SplitParser { onRead: (data) => { systemFilePickerProcess.selectedFile += data + "\n" } }
         onExited: (code) => {
             const trimmed = selectedFile.trim()
@@ -125,12 +131,12 @@ PluginComponent {
     popoutContent: Component {
         PopoutComponent {
             id: popout
-            headerText: "视频壁纸"
+            headerText: I18n.tr("Video Wallpaper", "mpvpaper")
             detailsText: {
                 root.refreshTrigger
                 const playlist = root.getPlaylist()
-                if (playlist.length === 0) return "暂无壁纸"
-                return `${playlist.length} 个壁纸 • 第 ${root.currentPage + 1}/${root.totalPages} 页`
+                if (playlist.length === 0) return I18n.tr("No Wallpapers", "mpvpaper")
+                return I18n.tr("%1 Wallpapers • Page %2/%3", "mpvpaper").arg(playlist.length).arg(root.currentPage + 1).arg(root.totalPages)
             }
             showCloseButton: true
 
@@ -150,10 +156,10 @@ PluginComponent {
                         Row {
                             anchors.fill: parent; anchors.margins: Theme.spacingM
                             spacing: Theme.spacingM
-                            StyledText { text: "显示器"; font.pixelSize: Theme.fontSizeSmall; width: 60; anchors.verticalCenter: parent.verticalCenter }
+                            StyledText { text: I18n.tr("Monitor", "mpvpaper"); font.pixelSize: Theme.fontSizeSmall; width: 60; anchors.verticalCenter: parent.verticalCenter }
                             DankDropdown {
                                 width: parent.width - 60 - Theme.spacingM * 2; height: 32; anchors.verticalCenter: parent.verticalCenter
-                                options: root.monitors; currentValue: root.selectedMonitor || "无显示器"; compactMode: true
+                                options: root.monitors; currentValue: root.selectedMonitor || I18n.tr("No Monitors", "mpvpaper"); compactMode: true
                                 onValueChanged: (value) => { root.selectedMonitor = value; root.currentPage = 0; root.gridIndex = 0 }
                             }
                         }
@@ -246,7 +252,7 @@ PluginComponent {
                         width: parent.width; height: 40; spacing: Theme.spacingM
                         Item { width: Theme.spacingS; height: 1 }
                         DankActionButton { iconName: "skip_previous"; iconSize: 18; buttonSize: 32; enabled: root.currentPage > 0; opacity: enabled ? 0.8 : 0.2; onClicked: { root.currentPage--; root.gridIndex = 0 } }
-                        StyledText { text: `第 ${root.currentPage + 1}/${root.totalPages} 页`; font.pixelSize: 12; color: Theme.surfaceText; opacity: 0.7; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter }
+                        StyledText { text: I18n.tr("Page %1/%2", "mpvpaper").arg(root.currentPage + 1).arg(root.totalPages); font.pixelSize: 12; color: Theme.surfaceText; opacity: 0.7; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter }
                         DankActionButton { iconName: "skip_next"; iconSize: 18; buttonSize: 32; enabled: root.currentPage < root.totalPages - 1; opacity: enabled ? 0.8 : 0.2; onClicked: { root.currentPage++; root.gridIndex = 0 } }
                         DankActionButton { iconName: "folder_open"; iconSize: 18; buttonSize: 32; opacity: 0.7; onClicked: root.openSystemFilePicker() }
                         Item { width: Theme.spacingS; height: 1 }

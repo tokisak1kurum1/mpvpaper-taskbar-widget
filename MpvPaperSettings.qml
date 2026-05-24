@@ -9,7 +9,7 @@ PluginSettings {
 
     StyledText {
         width: parent.width
-        text: "视频壁纸设置"
+        text: I18n.tr("Video Wallpaper Settings", "mpvpaper")
         font.pixelSize: Theme.fontSizeLarge
         font.weight: Font.Bold
         color: Theme.surfaceText
@@ -17,7 +17,7 @@ PluginSettings {
 
     StyledText {
         width: parent.width
-        text: "请在 MPV Paper 守护进程的设置页面中配置视频"
+        text: I18n.tr("A taskbar control panel to browse and switch wallpapers. Requires MpvPaper Plugin to be installed.", "mpvpaper")
         font.pixelSize: Theme.fontSizeSmall
         color: Theme.surfaceVariantText
         wrapMode: Text.WordWrap

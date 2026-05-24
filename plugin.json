@@ -1,14 +1,12 @@
 {
     "id": "mpvpaper-widget",
-    "name": "MPV Paper Widget",
-    "description": "Quick wallpaper switcher widget for taskbar",
+    "name": "MpvPaper Taskbar Widget",
+    "description": "A taskbar control panel to browse and switch wallpapers. Requires MpvPaper Plugin to be installed.",
     "version": "1.0.0",
     "author": "weijie",
     "type": "widget",
     "component": "./MpvPaperWidget.qml",
     "settings": "./MpvPaperSettings.qml",
-    "icon": "movie",
-    "requires": ["mpvpaper"],
     "permissions": [
         "settings_read",
         "settings_write"
