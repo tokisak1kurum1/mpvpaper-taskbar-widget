@@ -1,6 +1,6 @@
 # MpvPaper Taskbar Widget
 
-**Important Note: This is an extension widget. The [MpvPaper Plugin] must be installed first for it to work.**
+**Important Note: This is an extension widget. The [MpvPaper Plugin](https://github.com/tokisak1kurum1/mpvpaper-plugin) must be installed first for it to work.**
 
 ## Introduction
 A taskbar control panel to quickly browse, select, and switch video wallpapers directly from the status bar.
