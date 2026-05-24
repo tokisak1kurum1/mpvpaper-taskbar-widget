@@ -3,7 +3,7 @@
     "name": "MpvPaper Taskbar Widget",
     "description": "A taskbar control panel to browse and switch wallpapers. Requires MpvPaper Plugin to be installed.",
     "version": "1.0.0",
-    "author": "weijie",
+    "author": "tokisak1kurum1",
     "type": "widget",
     "component": "./MpvPaperWidget.qml",
     "settings": "./MpvPaperSettings.qml",

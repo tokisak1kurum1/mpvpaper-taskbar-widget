@@ -9,7 +9,7 @@ A taskbar control panel to quickly browse, select, and switch video wallpapers d
 
 ## System Dependencies
 **Required**: The core **MpvPaper Plugin** must be installed, and your system must have `mpvpaper` installed.
-* Arch Linux: `sudo pacman -S mpvpaper`
+* Arch Linux (AUR): `yay -S mpvpaper`
 
 ## License
 MIT
